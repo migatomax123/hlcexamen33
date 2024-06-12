@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  kapweb:
+    container_name: ${INICIALES}website
+    build:
+      context: $CONTEXTO
+      dockerfile: $DOCKERFILE_TALLER/kapDockerfile
+      args:
+        INICIALES: $INICIALES
+        TZ: $TZ
+        DEBIAN_FRONTEND: $DEBIAN_FRONTEND
+        IDRSA: $IDRSA
+        DOCKERFILE_TALLER: $DOCKERFILE_TALLER
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=pswJardineria
+      - REPO=https://github.com/morgadodesarrollador/ApiJardineriaNest.git
+      - DB_HOST=172.220.10.3
+      - DB_PORT=5432
+    ports:
+      - "3009:3001"
+    volumes:
+      - ./logs:/var/websitelogs:rw
+    networks:
+      kapnetexamen:
+        ipv4_address: 172.220.10.2
+    depends_on:
+      - db
+
+  db:
+    container_name: ${INICIALES}db
+    build:
+      context: $CONTEXTO
+      dockerfile: $DOCKERFILE_datos/kapDockerfile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pswJardineria
+      POSTGRES_DB: Jardineria
+    ports:
+      - "5435:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      kapnetexamen:
+        ipv4_address: 172.220.10.3
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      kapnetexamen:
+        ipv4_address: 172.220.10.5
+        
+networks:
+  kapnetexamen:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.220.10.0/24
+          gateway: 172.220.10.1
+
+volumes:
+  db-data:

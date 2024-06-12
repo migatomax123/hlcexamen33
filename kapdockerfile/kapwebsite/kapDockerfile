@@ -1,0 +1,25 @@
+FROM nginx:latest
+
+WORKDIR /root
+
+ARG DOCKERFILE_TALLER
+
+RUN apt-get update \
+    && apt-get install -y nano net-tools dos2unix openssh-server openssh-client git curl nodejs npm \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /root/api
+
+RUN mkdir -p /root/logs
+
+RUN touch /root/logs/logs.txt
+
+COPY ${DOCKERFILE_TALLER}/kapstart.sh /root
+RUN chmod +x /root/kapstart.sh
+
+ENTRYPOINT ["/root/kapstart.sh"]
+
+EXPOSE 80
+EXPOSE 3001
+

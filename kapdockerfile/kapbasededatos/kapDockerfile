@@ -1,0 +1,17 @@
+FROM postgres:13
+
+# Define los argumentos utilizados en la construcción de la imagen
+ARG POSTGRES_USER=postgres
+ARG POSTGRES_PASSWORD=pswJardineria
+ARG POSTGRES_DB=Jardineria
+
+# Establece las variables de entorno
+ENV POSTGRES_USER=$POSTGRES_USER
+ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+ENV POSTGRES_DB=$POSTGRES_DB
+
+# Copia archivos de inicialización si es necesario
+# COPY init.sql /docker-entrypoint-initdb.d/
+
+# Expone el puerto de PostgreSQL
+EXPOSE 5432

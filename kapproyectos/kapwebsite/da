@@ -1,0 +1,9 @@
+[0;1;31m●[0m docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Wed 2024-04-03 08:18:00 UTC; 16min ago
+TriggeredBy: [0;1;31m●[0m docker.socket
+       Docs: https://docs.docker.com
+    Process: 958 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock [0;1;31m(code=exited, status=1/FAILURE)[0m
+   Main PID: 958 (code=exited, status=1/FAILURE)
+
+Warning: journal has been rotated since unit was started, output may be incomplete.
